@@ -4,7 +4,7 @@ export interface IceCreamFlavor {
   description: string;
   price: number; // Will represent INR
   image: string; // Placeholder URL or AI generated Data URI
-  category: string;
+  category: string; // e.g., Cups, Cones, Tubs, Sticks, Family Packs, Sorbets
   rating: number; // Average rating, e.g., 4.5
   stock: number;
   aiPromptHint: string; // Hint for Unsplash or generic image search
