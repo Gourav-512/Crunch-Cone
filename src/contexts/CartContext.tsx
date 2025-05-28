@@ -1,3 +1,4 @@
+
 "use client";
 
 import type { IceCreamFlavor, CartItem } from '@/types';
@@ -26,18 +27,15 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       if (existingItem) {
         return prevItems.map(item =>
           item.flavorId === flavor.id
-            ? { ...item, quantity: Math.min(item.quantity + quantity, flavor.stock) } // Respect stock
+            ? { ...item, quantity: Math.min(item.quantity + quantity, flavor.stock) }
             : item
         );
       }
-      // Note: flavor.image here is the original placeholder. If an AI image was generated on FlavorCard,
-      // it's not directly passed here unless FlavorCard calls addToCart with the new image URI.
-      // For simplicity, cart items will use placeholder images.
       return [...prevItems, { 
         flavorId: flavor.id, 
         name: flavor.name, 
         price: flavor.price, 
-        image: flavor.image, // This will be the placeholder image
+        image: flavor.image,
         quantity: Math.min(quantity, flavor.stock),
         aiPromptHint: flavor.aiPromptHint 
       }];
@@ -59,11 +57,11 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const updateQuantity = useCallback((flavorId: string, quantity: number) => {
     setCartItems(prevItems => {
-      // Find flavor stock - this would ideally come from the flavor data if cart items stored more info
-      // For now, let's cap quantity at a reasonable limit if we don't have specific stock for cart item
       const itemInCart = prevItems.find(item => item.flavorId === flavorId);
-      // Placeholder for fetching stock if needed: const stock = getFlavorStock(flavorId);
-      const maxQuantity = itemInCart ? 99 : 10; // Using 99 as a general max, or flavor.stock if available
+      // Ideally, get actual stock from flavor data. Using a placeholder max for now.
+      const associatedFlavor = globalThis.placeholderFlavors?.find(f => f.id === flavorId); // Not ideal, better to pass stock or have it in cartItem
+      const maxQuantity = associatedFlavor ? associatedFlavor.stock : (itemInCart ? 99 : 10); 
+      
       const newQuantity = Math.max(1, Math.min(quantity, maxQuantity));
       
       return prevItems.map(item =>

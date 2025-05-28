@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from 'next/image';
@@ -24,7 +25,6 @@ export default function FlavorCard({ flavor }: FlavorCardProps) {
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
-    // If AI image is generated, it could be passed to cart. For now, cart uses original image.
     addToCart(flavor);
   };
 
@@ -71,7 +71,7 @@ export default function FlavorCard({ flavor }: FlavorCardProps) {
           height={400}
           className="w-full h-48 object-cover"
           data-ai-hint={flavor.aiPromptHint}
-          unoptimized={aiGeneratedImageUrl ? true : false} // Data URIs don't need Next.js optimization
+          unoptimized={aiGeneratedImageUrl ? true : false}
         />
         <div className="absolute top-2 right-2">
           <FavoriteButton flavorId={flavor.id} className="bg-background/70 hover:bg-background/90" />
@@ -101,7 +101,7 @@ export default function FlavorCard({ flavor }: FlavorCardProps) {
           {flavor.description}
         </CardDescription>
         <div className="flex items-center justify-between text-sm mb-2">
-          <span className="font-medium text-primary">${flavor.price.toFixed(2)}</span>
+          <span className="font-medium text-primary">₹{flavor.price.toFixed(2)}</span>
           <div className="flex items-center">
             <Star className="h-4 w-4 text-yellow-400 fill-yellow-400 mr-1" />
             <span>{flavor.rating.toFixed(1)}</span>

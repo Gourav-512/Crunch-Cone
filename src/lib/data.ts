@@ -5,7 +5,7 @@ export const placeholderFlavors: IceCreamFlavor[] = [
     id: '1',
     name: 'Vanilla Bean Bliss',
     description: 'Classic rich vanilla bean ice cream, smooth and creamy.',
-    price: 4.99,
+    price: 180, // Approx ₹180
     image: 'https://placehold.co/600x400.png',
     category: 'Cups',
     rating: 4.5,
@@ -16,7 +16,7 @@ export const placeholderFlavors: IceCreamFlavor[] = [
     id: '2',
     name: 'Chocolate Decadence',
     description: 'Deep, dark chocolate indulgence for true chocoholics.',
-    price: 5.49,
+    price: 200, // Approx ₹200
     image: 'https://placehold.co/600x400.png',
     category: 'Cups',
     rating: 4.8,
@@ -27,7 +27,7 @@ export const placeholderFlavors: IceCreamFlavor[] = [
     id: '3',
     name: 'Strawberry Swirl Sensation',
     description: 'Sweet strawberries swirled into creamy goodness.',
-    price: 5.29,
+    price: 190, // Approx ₹190
     image: 'https://placehold.co/600x400.png',
     category: 'Tricone',
     rating: 4.6,
@@ -38,7 +38,7 @@ export const placeholderFlavors: IceCreamFlavor[] = [
     id: '4',
     name: 'Minty Choco Chip',
     description: 'Refreshing mint ice cream with generous chocolate chips.',
-    price: 5.49,
+    price: 210, // Approx ₹210
     image: 'https://placehold.co/600x400.png',
     category: 'Tubs',
     rating: 4.7,
@@ -49,7 +49,7 @@ export const placeholderFlavors: IceCreamFlavor[] = [
     id: '5',
     name: 'Caramel Crunch Delight',
     description: 'Smooth caramel ice cream with crunchy toffee pieces.',
-    price: 5.99,
+    price: 220, // Approx ₹220
     image: 'https://placehold.co/600x400.png',
     category: 'Jumbo Cups',
     rating: 4.9,
@@ -60,7 +60,7 @@ export const placeholderFlavors: IceCreamFlavor[] = [
     id: '6',
     name: 'Cookies & Cream Dream',
     description: 'Classic cookies and cream, a fan favorite.',
-    price: 5.49,
+    price: 200, // Approx ₹200
     image: 'https://placehold.co/600x400.png',
     category: 'Packs',
     rating: 4.7,
@@ -71,7 +71,7 @@ export const placeholderFlavors: IceCreamFlavor[] = [
     id: '7',
     name: 'Peanut Butter Passion',
     description: 'Creamy peanut butter ice cream with chocolate swirls.',
-    price: 5.79,
+    price: 215, // Approx ₹215
     image: 'https://placehold.co/600x400.png',
     category: 'Sticks',
     rating: 4.6,
@@ -82,7 +82,7 @@ export const placeholderFlavors: IceCreamFlavor[] = [
     id: '8',
     name: 'Mango Tango Sorbet',
     description: 'Refreshing and tangy mango sorbet, dairy-free.',
-    price: 4.99,
+    price: 170, // Approx ₹170
     image: 'https://placehold.co/600x400.png',
     category: 'Cups',
     rating: 4.4,

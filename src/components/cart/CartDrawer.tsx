@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from 'next/link';
@@ -24,7 +25,7 @@ interface CartDrawerProps {
 export default function CartDrawer({ open, onOpenChange }: CartDrawerProps) {
   const { cartItems, getCartTotal, getCartItemCount } = useCart();
   const subtotal = getCartTotal();
-  const deliveryFee = 0; // Placeholder
+  const deliveryFee = 0; // Delivery fee calculation might move to checkout page or be dynamic
   const total = subtotal + deliveryFee;
 
   return (
@@ -40,7 +41,7 @@ export default function CartDrawer({ open, onOpenChange }: CartDrawerProps) {
             <p className="text-lg font-medium text-muted-foreground">Your cart is empty.</p>
             <p className="text-sm text-muted-foreground mb-4">Looks like you haven't added anything to your cart yet.</p>
             <SheetClose asChild>
-              <Button variant="outline">Continue Shopping</Button>
+              <Button variant="outline" onClick={() => onOpenChange(false)}>Continue Shopping</Button>
             </SheetClose>
           </div>
         ) : (
@@ -57,16 +58,18 @@ export default function CartDrawer({ open, onOpenChange }: CartDrawerProps) {
               <div className="w-full space-y-3">
                 <div className="flex justify-between text-sm">
                   <span>Subtotal</span>
-                  <span>${subtotal.toFixed(2)}</span>
+                  <span>₹{subtotal.toFixed(2)}</span>
                 </div>
-                <div className="flex justify-between text-sm text-muted-foreground">
-                  <span>Delivery Fee</span>
-                  <span>{deliveryFee > 0 ? `$${deliveryFee.toFixed(2)}` : "Calculated at checkout"}</span>
-                </div>
+                {deliveryFee > 0 && (
+                  <div className="flex justify-between text-sm text-muted-foreground">
+                    <span>Delivery Fee</span>
+                    <span>₹{deliveryFee.toFixed(2)}</span>
+                  </div>
+                )}
                 <Separator />
                 <div className="flex justify-between text-lg font-semibold">
                   <span>Total</span>
-                  <span>${total.toFixed(2)}</span>
+                  <span>₹{total.toFixed(2)}</span>
                 </div>
                 <SheetClose asChild>
                   <Button asChild className="w-full bg-accent hover:bg-accent/90 text-accent-foreground mt-4">
