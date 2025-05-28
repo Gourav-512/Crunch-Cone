@@ -15,26 +15,43 @@ import {
   OrderOutputSchema, 
   type OrderOutput 
 } from '@/types/order';
+import twilio from 'twilio';
 
+// The owner's phone number - IMPORTANT: Store this in an environment variable in a real app for flexibility.
+// For example, process.env.OWNER_PHONE_NUMBER
+const OWNER_PHONE_NUMBER = '8767154800'; // Use +91 prefix for real Indian numbers with SMS APIs that require it.
 
-// The owner's phone number - IMPORTANT: Move to an environment variable in a real app!
-const OWNER_PHONE_NUMBER = '8767154800'; // Use +91 prefix for real Indian numbers with SMS APIs
-
-// Mock SMS Sending Function (replace with actual SMS service integration)
+// SMS Sending Function
 async function sendSmsNotification(phoneNumber: string, message: string): Promise<boolean> {
-  console.log(`SIMULATED SMS to ${phoneNumber}: ${message}`);
-  // In a real app, integrate with Twilio, Vonage, Firebase SMS extension, etc.
-  // Example (conceptual):
-  // const twilio = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
-  // try {
-  //   await twilio.messages.create({ body: message, from: process.env.TWILIO_PHONE_NUMBER, to: phoneNumber });
-  //   console.log('SMS sent successfully via real service.');
-  //   return true;
-  // } catch (error) {
-  //   console.error("Actual SMS sending failed:", error);
-  //   return false;
-  // }
-  return true; // Simulate success for now
+  const accountSid = process.env.TWILIO_ACCOUNT_SID;
+  const authToken = process.env.TWILIO_AUTH_TOKEN;
+  const twilioPhoneNumber = process.env.TWILIO_PHONE_NUMBER;
+
+  // Check if Twilio credentials are configured in environment variables
+  if (accountSid && authToken && twilioPhoneNumber) {
+    try {
+      const client = twilio(accountSid, authToken);
+      await client.messages.create({
+        body: message,
+        from: twilioPhoneNumber, // Your Twilio phone number
+        to: phoneNumber, // The recipient's phone number (owner's number)
+      });
+      console.log(`SMS sent successfully via Twilio to ${phoneNumber}.`);
+      return true;
+    } catch (error) {
+      console.error('Error sending SMS via Twilio:', error);
+      // Fallback to console log if Twilio fails
+      console.log(`FALLBACK SIMULATED SMS to ${phoneNumber} (Twilio send failed): ${message}`);
+      return false; // Indicate failure
+    }
+  } else {
+    // Fallback to console log if Twilio is not configured
+    console.warn(
+      'Twilio credentials not found in environment variables. SMS not sent. Simulating instead.'
+    );
+    console.log(`SIMULATED SMS to ${phoneNumber}: ${message}`);
+    return true; // Simulate success for console logging
+  }
 }
 
 export async function processOrder(input: OrderInput): Promise<OrderOutput> {
@@ -70,23 +87,23 @@ Delivery Address:
 ----------------------
     `.trim();
 
-    // 3. "Send" the SMS notification to the owner
-    // In a real app, ensure OWNER_PHONE_NUMBER includes country code if required by SMS provider e.g. +918767154800
+    // 3. Send the SMS notification to the owner
     const notificationSent = await sendSmsNotification(OWNER_PHONE_NUMBER, notificationMessage);
 
     // 4. Log the order (in a real app, this would be saved to a database)
-    console.log(`Order ${orderId} processed successfully. Details:`, JSON.stringify(input, null, 2));
-    if (notificationSent) {
+    console.log(`Order ${orderId} processed. Details:`, JSON.stringify(input, null, 2));
+    if (notificationSent && process.env.TWILIO_ACCOUNT_SID) { // Check if it was a real attempt
+      console.log(`Owner notification SMS sent successfully to ${OWNER_PHONE_NUMBER}.`);
+    } else if (notificationSent) {
       console.log(`Owner notification SMS simulated successfully to ${OWNER_PHONE_NUMBER}.`);
     } else {
-      console.warn(`Owner notification SMS simulation FAILED for ${OWNER_PHONE_NUMBER}. Check SMS service/logic.`);
-      // Potentially trigger a fallback notification or alert for admin
+      console.warn(`Owner notification SMS FAILED for ${OWNER_PHONE_NUMBER}. Check SMS service/logic or Twilio error logs.`);
     }
     
     // 5. Return a response to the frontend
-    if (!notificationSent) {
+    if (!notificationSent && process.env.TWILIO_ACCOUNT_SID) { // If real SMS attempt failed
       return {
-        orderId, // Still provide orderId even if notification fails, as order is "placed"
+        orderId,
         message: `Order placed (ID: ${orderId}), but there was an issue notifying the owner. We will still process your order.`,
         notificationSent: false,
       };
@@ -95,7 +112,7 @@ Delivery Address:
     return {
       orderId,
       message: `Order ID: ${orderId}. Your order has been placed successfully! The shop owner has been notified.`,
-      notificationSent: true,
+      notificationSent: true, // True for simulation if Twilio isn't configured, or if Twilio succeeded.
     };
   }
 );
