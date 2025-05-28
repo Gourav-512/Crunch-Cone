@@ -1,3 +1,4 @@
+
 import FlavorList from '@/components/flavors/FlavorList';
 import FlavorRecommendations from '@/components/ai/FlavorRecommendations';
 import { placeholderFlavors } from '@/lib/data';
@@ -42,7 +43,7 @@ export default async function HomePage() {
   return (
     <div className="space-y-12">
       <section aria-labelledby="flavors-main-heading">
-        <h1 id="flavors-main-heading" className="text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl mb-10 text-center">
+        <h1 id="flavors-main-heading" className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl md:text-5xl mb-10 text-center">
           Discover Our Delicious Ice Creams
         </h1>
         <p className="text-center text-lg text-muted-foreground mb-12">
@@ -54,7 +55,7 @@ export default async function HomePage() {
         <section key={category} aria-labelledby={`category-heading-${category.toLowerCase().replace(/\s+/g, '-')}`}>
           <h2 
             id={`category-heading-${category.toLowerCase().replace(/\s+/g, '-')}`} 
-            className="text-3xl font-bold tracking-tight text-primary sm:text-4xl mb-6"
+            className="text-2xl font-bold tracking-tight text-primary sm:text-3xl md:text-4xl mb-6"
           >
             {category}
           </h2>

@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -108,7 +109,7 @@ const SheetTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SheetPrimitive.Title
     ref={ref}
-    className={cn("text-lg font-semibold text-foreground", className)}
+    className={cn("text-xl sm:text-2xl font-semibold text-foreground", className)} // Responsive font size
     {...props}
   />
 ))

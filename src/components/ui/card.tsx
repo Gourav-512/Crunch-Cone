@@ -1,3 +1,4 @@
+
 import * as React from "react"
 
 import { cn } from "@/lib/utils"
@@ -30,25 +31,25 @@ const CardHeader = React.forwardRef<
 CardHeader.displayName = "CardHeader"
 
 const CardTitle = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
+  HTMLDivElement, // Changed from HTMLParagraphElement to HTMLDivElement for semantic consistency
+  React.HTMLAttributes<HTMLHeadingElement> // Use HTMLHeadingElement attributes for a title
 >(({ className, ...props }, ref) => (
-  <div
+  <div // Can be h2, h3 etc. depending on context, div is a safe default wrapper if actual heading tag is inside children
     ref={ref}
     className={cn(
-      "text-2xl font-semibold leading-none tracking-tight",
+      "text-xl font-semibold leading-none tracking-tight sm:text-2xl", // Responsive font size
       className
     )}
-    {...props}
+    {...props} // children will be passed here
   />
 ))
 CardTitle.displayName = "CardTitle"
 
 const CardDescription = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
+  HTMLParagraphElement, // Correctly a paragraph
+  React.HTMLAttributes<HTMLParagraphElement>
 >(({ className, ...props }, ref) => (
-  <div
+  <p // Using <p> tag directly for semantic correctness
     ref={ref}
     className={cn("text-sm text-muted-foreground", className)}
     {...props}
