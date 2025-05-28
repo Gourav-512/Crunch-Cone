@@ -10,6 +10,7 @@ export const placeholderFlavors: IceCreamFlavor[] = [
     category: 'Cups',
     rating: 4.5,
     stock: 100,
+    aiPromptHint: 'vanilla icecream',
   },
   {
     id: '2',
@@ -20,6 +21,7 @@ export const placeholderFlavors: IceCreamFlavor[] = [
     category: 'Cups',
     rating: 4.8,
     stock: 80,
+    aiPromptHint: 'chocolate icecream',
   },
   {
     id: '3',
@@ -30,6 +32,7 @@ export const placeholderFlavors: IceCreamFlavor[] = [
     category: 'Tricone',
     rating: 4.6,
     stock: 90,
+    aiPromptHint: 'strawberry icecream',
   },
   {
     id: '4',
@@ -40,6 +43,7 @@ export const placeholderFlavors: IceCreamFlavor[] = [
     category: 'Tubs',
     rating: 4.7,
     stock: 70,
+    aiPromptHint: 'mint chocolatechip',
   },
   {
     id: '5',
@@ -50,6 +54,7 @@ export const placeholderFlavors: IceCreamFlavor[] = [
     category: 'Jumbo Cups',
     rating: 4.9,
     stock: 60,
+    aiPromptHint: 'caramel icecream',
   },
   {
     id: '6',
@@ -60,6 +65,7 @@ export const placeholderFlavors: IceCreamFlavor[] = [
     category: 'Packs',
     rating: 4.7,
     stock: 120,
+    aiPromptHint: 'cookies cream',
   },
   {
     id: '7',
@@ -70,6 +76,7 @@ export const placeholderFlavors: IceCreamFlavor[] = [
     category: 'Sticks',
     rating: 4.6,
     stock: 50,
+    aiPromptHint: 'peanutbutter icecream',
   },
   {
     id: '8',
@@ -80,11 +87,6 @@ export const placeholderFlavors: IceCreamFlavor[] = [
     category: 'Cups',
     rating: 4.4,
     stock: 75,
+    aiPromptHint: 'mango sorbet',
   },
 ];
-
-// Add data-ai-hint to images in placeholderFlavors
-placeholderFlavors.forEach(flavor => {
-  const hint = flavor.name.toLowerCase().split(' ')[0] + " icecream"; // e.g., "vanilla icecream"
-  flavor.image = `${flavor.image}?data-ai-hint=${encodeURIComponent(hint.substring(0,20))}`;
-});

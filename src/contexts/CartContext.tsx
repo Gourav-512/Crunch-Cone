@@ -30,7 +30,17 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
             : item
         );
       }
-      return [...prevItems, { flavorId: flavor.id, name: flavor.name, price: flavor.price, image: flavor.image, quantity: Math.min(quantity, flavor.stock) }];
+      // Note: flavor.image here is the original placeholder. If an AI image was generated on FlavorCard,
+      // it's not directly passed here unless FlavorCard calls addToCart with the new image URI.
+      // For simplicity, cart items will use placeholder images.
+      return [...prevItems, { 
+        flavorId: flavor.id, 
+        name: flavor.name, 
+        price: flavor.price, 
+        image: flavor.image, // This will be the placeholder image
+        quantity: Math.min(quantity, flavor.stock),
+        aiPromptHint: flavor.aiPromptHint 
+      }];
     });
     toast({
       title: "Added to cart!",
@@ -49,10 +59,13 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const updateQuantity = useCallback((flavorId: string, quantity: number) => {
     setCartItems(prevItems => {
-      // Find flavor stock - assumes flavors are accessible or passed differently in a real app
-      // For now, let's just cap quantity if we had stock info. Here, we allow going up to a reasonable limit.
-      const maxQuantity = 10; // Or flavor.stock if available
+      // Find flavor stock - this would ideally come from the flavor data if cart items stored more info
+      // For now, let's cap quantity at a reasonable limit if we don't have specific stock for cart item
+      const itemInCart = prevItems.find(item => item.flavorId === flavorId);
+      // Placeholder for fetching stock if needed: const stock = getFlavorStock(flavorId);
+      const maxQuantity = itemInCart ? 99 : 10; // Using 99 as a general max, or flavor.stock if available
       const newQuantity = Math.max(1, Math.min(quantity, maxQuantity));
+      
       return prevItems.map(item =>
         item.flavorId === flavorId
           ? { ...item, quantity: newQuantity }

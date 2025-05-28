@@ -14,26 +14,19 @@ interface CartItemCardProps {
 export default function CartItemCard({ item }: CartItemCardProps) {
   const { updateQuantity, removeFromCart } = useCart();
 
-  // Extract data-ai-hint from item.image URL
-  let imageUrl = item.image;
-  let aiHint = "";
-  try {
-    const url = new URL(item.image);
-    aiHint = url.searchParams.get("data-ai-hint") || "";
-    imageUrl = `${url.protocol}//${url.host}${url.pathname}`;
-  } catch (e) {
-    // Invalid URL, use as is
-  }
+  // CartItem.image will be the placeholder URL from data.ts
+  // CartItem.aiPromptHint can be used for the data-ai-hint attribute
+  const aiHintForImage = item.aiPromptHint || item.name.split(' ')[0].toLowerCase() || "icecream";
 
   return (
     <div className="flex items-center space-x-4 py-3 border-b last:border-b-0">
       <Image
-        src={imageUrl}
+        src={item.image} // This is the placeholder image
         alt={item.name}
         width={64}
         height={64}
         className="w-16 h-16 object-cover rounded-md"
-        data-ai-hint={aiHint || "icecream"}
+        data-ai-hint={aiHintForImage} // Use the hint from cart item
       />
       <div className="flex-grow">
         <h4 className="font-semibold text-sm">{item.name}</h4>
@@ -46,10 +39,13 @@ export default function CartItemCard({ item }: CartItemCardProps) {
         <Input
           type="number"
           value={item.quantity}
-          onChange={(e) => updateQuantity(item.flavorId, parseInt(e.target.value))}
+          onChange={(e) => {
+            const val = parseInt(e.target.value);
+            if (!isNaN(val)) updateQuantity(item.flavorId, val);
+          }}
           className="w-12 h-8 text-center"
           min="1"
-          // max={flavor.stock} // Ideally, we'd have stock info here
+          // max={flavor.stock} // Ideally, we'd have stock info here from the original flavor
           aria-label="Quantity"
         />
         <Button variant="ghost" size="icon" onClick={() => updateQuantity(item.flavorId, item.quantity + 1)} aria-label="Increase quantity">
