@@ -12,7 +12,8 @@ import { AlertCircle, MapPin, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
-import { processOrder, OrderInput } from "@/ai/flows/order-processing-flow";
+import { processOrder } from "@/ai/flows/order-processing-flow";
+import type { OrderInput } from "@/types/order";
 
 export default function CheckoutPage() {
   const { cartItems, getCartTotal, clearCart } = useCart();

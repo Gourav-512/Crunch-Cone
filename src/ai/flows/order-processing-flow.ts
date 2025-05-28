@@ -1,45 +1,21 @@
+
 'use server';
 /**
  * @fileOverview Processes customer orders and sends notifications to the owner.
  *
  * - processOrder - Handles the order submission and owner notification.
- * - OrderInput - The input type for the processOrder function.
- * - OrderOutput - The return type for the processOrder function.
+ * - OrderInput - The input type for the processOrder function (imported from @/types/order).
+ * - OrderOutput - The return type for the processOrder function (imported from @/types/order).
  */
 
 import {ai} from '@/ai/genkit';
-import {z} from 'genkit';
+import { 
+  OrderInputSchema, 
+  type OrderInput, 
+  OrderOutputSchema, 
+  type OrderOutput 
+} from '@/types/order';
 
-// Define Schemas mirroring CartItem and for order details
-const CartItemSchemaForOrder = z.object({
-  flavorId: z.string(),
-  name: z.string(),
-  price: z.number(),
-  quantity: z.number(),
-  image: z.string().describe("Image URL of the item"), // Keeping image for potential future use in notifications
-  aiPromptHint: z.string().optional().describe("AI prompt hint for the item image"),
-});
-
-const DeliveryAddressSchema = z.object({
-  street: z.string().min(1, { message: "Street address is required" }),
-  city: z.string().min(1, { message: "City is required" }),
-  zip: z.string().min(1, { message: "Zip code is required" }),
-});
-
-export const OrderInputSchema = z.object({
-  cartItems: z.array(CartItemSchemaForOrder),
-  totalAmount: z.number(),
-  deliveryAddress: DeliveryAddressSchema,
-  // Optional: customerContact: z.string().email().optional().describe("Customer's email for receipt"),
-});
-export type OrderInput = z.infer<typeof OrderInputSchema>;
-
-export const OrderOutputSchema = z.object({
-  orderId: z.string().nullable(),
-  message: z.string(),
-  notificationSent: z.boolean(),
-});
-export type OrderOutput = z.infer<typeof OrderOutputSchema>;
 
 // The owner's phone number - IMPORTANT: Move to an environment variable in a real app!
 const OWNER_PHONE_NUMBER = '8767154800'; // Use +91 prefix for real Indian numbers with SMS APIs
