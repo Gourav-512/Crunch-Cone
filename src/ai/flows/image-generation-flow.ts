@@ -1,3 +1,4 @@
+
 'use server';
 /**
  * @fileOverview Generates an image of an ice cream flavor using AI.
@@ -33,17 +34,10 @@ const generateIceCreamImageFlow = ai.defineFlow(
   async (input) => {
     try {
       const { media } = await ai.generate({
-        model: 'googleai/gemini-2.0-flash-exp', // Ensure this model supports image generation
+        model: 'googleai/gemini-2.0-flash-preview-image-generation', // Corrected model name for image generation
         prompt: input.prompt,
         config: {
           responseModalities: ['TEXT', 'IMAGE'], // Important: Must include TEXT and IMAGE
-          // Optional: Adjust safety settings if needed, though default might be fine for ice cream
-          // safetySettings: [
-          //   { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
-          //   { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
-          //   { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
-          //   { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' },
-          // ],
         },
       });
 

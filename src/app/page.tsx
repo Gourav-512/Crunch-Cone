@@ -30,15 +30,8 @@ export default async function HomePage() {
 
   const categoryOrder = ['Cups', 'Cones', 'Sticks', 'Sorbets', 'Tubs', 'Family Packs', 'Uncategorized'];
   
-  // Filter out empty categories and sort them
+  // Filter out empty categories and sort them according to categoryOrder
   const sortedCategories = categoryOrder.filter(cat => groupedFlavors[cat] && groupedFlavors[cat].length > 0);
-  if (!groupedFlavors['Uncategorized'] || groupedFlavors['Uncategorized'].length === 0) {
-    const uncategorizedIndex = sortedCategories.indexOf('Uncategorized');
-    if (uncategorizedIndex > -1) {
-      sortedCategories.splice(uncategorizedIndex, 1);
-    }
-  }
-
 
   return (
     <div className="space-y-12">

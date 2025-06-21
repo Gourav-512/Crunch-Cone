@@ -4,6 +4,7 @@
 import type { IceCreamFlavor, CartItem } from '@/types';
 import React, { createContext, useContext, useState, ReactNode, useCallback } from 'react';
 import { useToast } from "@/hooks/use-toast";
+import { placeholderFlavors } from '@/lib/data';
 
 interface CartContextType {
   cartItems: CartItem[];
@@ -58,8 +59,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const updateQuantity = useCallback((flavorId: string, quantity: number) => {
     setCartItems(prevItems => {
       const itemInCart = prevItems.find(item => item.flavorId === flavorId);
-      // Ideally, get actual stock from flavor data. Using a placeholder max for now.
-      const associatedFlavor = globalThis.placeholderFlavors?.find(f => f.id === flavorId); // Not ideal, better to pass stock or have it in cartItem
+      const associatedFlavor = placeholderFlavors.find(f => f.id === flavorId);
       const maxQuantity = associatedFlavor ? associatedFlavor.stock : (itemInCart ? 99 : 10); 
       
       const newQuantity = Math.max(1, Math.min(quantity, maxQuantity));
