@@ -12,3 +12,4 @@ Crunch Cone is a modern, AI-enhanced ice cream parlor web application built with
 ## Getting Started
 
 To get started, take a look at `src/app/page.tsx`.
+# Crunch-Cone
