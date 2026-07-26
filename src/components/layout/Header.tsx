@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from 'next/link';
@@ -19,7 +18,7 @@ export default function Header() {
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center space-x-2">
             <IceCream className="h-7 w-7 sm:h-8 sm:w-8 text-primary" />
-            <span className="font-bold text-xl sm:text-2xl text-foreground">Scoop Shop</span>
+            <span className="font-bold text-xl sm:text-2xl text-foreground">Crunch Cone</span>
           </Link>
           <Button
             variant="ghost"

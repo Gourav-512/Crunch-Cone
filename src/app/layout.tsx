@@ -17,8 +17,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Scoop Shop - Delicious Ice Cream Delivered',
-  description: 'Order your favorite ice cream flavors from Scoop Shop!',
+  title: 'Crunch Cone - Delicious Ice Cream Delivered',
+  description: 'Order your favorite ice cream flavors from Crunch Cone!',
 };
 
 export default function RootLayout({

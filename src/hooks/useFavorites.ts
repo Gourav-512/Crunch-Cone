@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 
-const FAVORITES_STORAGE_KEY = 'scoopShopFavorites';
+const FAVORITES_STORAGE_KEY = 'crunchConeFavorites';
 
 export function useFavorites() {
   const [favorites, setFavorites] = useState<string[]>([]);
